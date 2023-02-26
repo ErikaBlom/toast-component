@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import { useEscapeKey } from '../../hooks/useEscapeKey';
 
 export const ToastContext = React.createContext();
 
@@ -19,10 +20,12 @@ const ToastProvider = ({ children }) => {
            setToastVariant('notice');
       }
     
-      const onDismiss = (toastId) => {
+    const onDismiss = (toastId) => {
         const newToastArray = toastArray.filter(toast => toast.id !== toastId);
         setToastArray(newToastArray);
-      }
+    }
+
+    useEscapeKey(toastArray, onDismiss);
     
     const value = {
         message,
